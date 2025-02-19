@@ -22,6 +22,7 @@ public class Main {
         File jar = new File(System.getProperty("user.dir") + File.separator + "volt.jar");
 
         natives.deleteOnExit();
+        libraries.deleteOnExit();
 
         try {
             FileUtils.copyURLToFile(new URL("https://github.com/StephenIsTaken/Volt-Launcher/raw/main/Assets/natives.zip"), natives);
@@ -37,12 +38,15 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        File librariesJar = new File(System.getProperty("user.dir") + File.separator + "libraries" + File.separator + "libraries.jar");
+
         try {
             Process process = Runtime.getRuntime().exec("java "
                     + "-Xmx4g "
                     + "-Xms4g "
                     + "-Djava.library.path=\"" + (System.getProperty("user.dir") + File.separator + "natives") + "\" "
-                    + "-cp \"" + jar + ";" + "libraries\"" + libraries + ";lwjgl.jar;lwjgl_util.jar\" "
+                    + "-cp \"" + jar + ";" + librariesJar + ";lwjgl.jar;lwjgl_util.jar\" "
                     + "net.minecraft.client.main.Main "
                     + "--gameDir " + mcDir + " "
                     + "--assetsDir " + mcAssets + " "
